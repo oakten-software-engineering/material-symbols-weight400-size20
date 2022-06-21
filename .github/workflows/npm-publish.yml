@@ -36,6 +36,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+      - name: Set git user
+        uses: git-actions/set-user@v1
       - name: Setup node.js
         uses: actions/setup-node@v3
         with:
