@@ -26,18 +26,13 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v23
       - name: List all changed files
-        run: |
-          echo ${{ toJSON(steps.changed-files.outputs) }}
-          echo "\n================================\n"
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
-          done
+        run: echo "${{ toJSON(steps.changed-files.outputs) }}"
           
   publish-npm:
     name: Update version and publish to npm
     runs-on: ubuntu-latest
     needs: check-for-update
-    if: ${{ needs.check-for-update.outputs.any_changed == 'true' }}
+    if: ${{ needs.check-for-update.outputs.all_changed_files != '' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
