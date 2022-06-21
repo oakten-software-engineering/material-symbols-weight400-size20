@@ -27,7 +27,7 @@ jobs:
         uses: tj-actions/changed-files@v23
       - name: List all changed files
         run: |
-          echo toJSON(steps.changed-files.outputs)
+          echo ${{ steps.changed-files.outputs }}
           echo "\n================================\n"
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "$file was changed"
