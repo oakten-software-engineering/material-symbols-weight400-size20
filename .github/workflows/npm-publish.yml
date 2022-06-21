@@ -25,6 +25,13 @@ jobs:
       - name: Get changed files
         id: changed-files
         uses: tj-actions/changed-files@v23
+      - name: List all changed files
+        run: |
+          echo toJSON(steps.changed-files.outputs)
+          echo "\n================================\n"
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
           
   publish-npm:
     name: Update version and publish to npm
