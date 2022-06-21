@@ -43,6 +43,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+          scope: '@oakten'
       - name: Update
         run: npm version patch
       - name: Commit version update
@@ -51,6 +52,9 @@ jobs:
           default_author: github_actions
           message: 'Package Version Update'
           add: '.'
-      - run: npm publish
+      - name: NPM clean install
+        run: npm ci
+      - name: NPM publish
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
