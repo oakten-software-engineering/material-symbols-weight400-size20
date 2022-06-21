@@ -44,7 +44,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
           scope: '@oakten'
       - name: Update npm version
-        run: npm version patch
+        run: npm version patch --no-git-tag-version
       - name: Commit version update
         uses: EndBug/add-and-commit@v9
         with:
