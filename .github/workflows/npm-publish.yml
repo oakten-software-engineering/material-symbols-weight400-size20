@@ -50,7 +50,7 @@ jobs:
         with:
           default_author: github_actions
           message: 'Package Version Update'
-          add: '.'
+          add: '["package.json", "package-lock.json"]'
       - name: NPM clean install
         run: npm ci
       - name: NPM publish
