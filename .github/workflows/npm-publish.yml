@@ -15,7 +15,7 @@ jobs:
   check-for-update:
     runs-on: ubuntu-latest
     name: Check if symbols changed
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch'
     outputs:
       all_changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
@@ -31,7 +31,7 @@ jobs:
     name: Update version and publish to npm
     runs-on: ubuntu-latest
     needs: check-for-update
-    if: ${{ needs.check-for-update.outputs.all_changed_files != '' }}
+    if: contains(needs.check-for-update.outputs.all_changed_files, 'symbols')
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
