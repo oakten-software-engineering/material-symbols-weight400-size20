@@ -1,5 +1,5 @@
 {
-  "name": "@oakten/material-symbols",
+  "name": "@oakten/material-symbols-weight400-size20",
   "version": "1.0.3",
   "description": "Material Symbols weight=600 optical-size=20px",
   "devDependencies": {
