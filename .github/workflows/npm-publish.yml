@@ -44,13 +44,9 @@ jobs:
           registry-url: https://registry.npmjs.org/
           scope: '@oakten'
       - name: Update npm version
-        run: npm version patch --no-git-tag-version
-      - name: Commit version update
-        uses: EndBug/add-and-commit@v9
-        with:
-          default_author: github_actions
-          message: 'Package Version Update'
-          add: '["package.json", "package-lock.json"]'
+        run: npm version patch
+      - name: Push version update
+        run: git push
       - name: NPM clean install
         run: npm ci
       - name: NPM publish
