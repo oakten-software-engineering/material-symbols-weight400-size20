@@ -53,12 +53,15 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Write npm version to output
+        run: echo "::set-output name=packageversion::$(node -p \"require('./package.json').version\")"
+        id: packageversion
       - name: Github Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          release_name: v${{ steps.packageversion.outputs.packageversion }}
           draft: false
           prerelease: false
