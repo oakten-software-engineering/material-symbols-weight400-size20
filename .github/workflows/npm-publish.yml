@@ -61,7 +61,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: v${{ steps.packageversion.outputs.packageversion }}
           release_name: v${{ steps.packageversion.outputs.packageversion }}
           draft: false
           prerelease: false
