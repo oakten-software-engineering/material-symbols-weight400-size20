@@ -54,7 +54,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Write npm version to output
-        run: echo "::set-output name=packageversion::$(node -p \"require('./package.json').version\")"
+        run: echo "::set-output name=packageversion::$(node -p "require('./package.json').version")"
         id: packageversion
       - name: Github Release
         uses: actions/create-release@v1
