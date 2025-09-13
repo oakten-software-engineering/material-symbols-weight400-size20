@@ -1,6 +1,6 @@
 {
   "name": "@oakten/material-symbols-weight400-size20",
-  "version": "1.0.95",
+  "version": "1.0.96",
   "description": "Material Symbols weight=600 optical-size=20px",
   "devDependencies": {
     "@material-design-icons/scripts": "^0.4.2"
