@@ -1,13 +1,16 @@
 {
-  "name": "@oakten/material-symbols-weight400-size20",
+  "name": "@oakten-software-engineering/material-symbols-weight400-size20",
   "version": "1.0.102",
-  "description": "Material Symbols weight=600 optical-size=20px",
+  "description": "Material Symbols weight=400 optical-size=20px",
   "devDependencies": {
     "@material-design-icons/scripts": "^0.4.2"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oakten-software-engineering/material-symbols-weight400-size20.git"
+    "url": "https://github.com/oakten-software-engineering/material-symbols-weight400-size20.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "material",
