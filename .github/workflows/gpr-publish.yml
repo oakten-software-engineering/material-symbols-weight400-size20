@@ -54,7 +54,7 @@ jobs:
           scope: '@oakten-software-engineering'
 
       - name: Verify npm authentication
-        run: npm whoami --registry=https://npm.pkg.github.com
+        run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
 
