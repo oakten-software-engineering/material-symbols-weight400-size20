@@ -50,11 +50,12 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-        env:
-          NODE_AUTH_TOKEN: ${{ github.token }}
+          registry-url: 'https://npm.pkg.github.com'
 
       - name: Verify npm authentication
-        run: npm whoami --registry=https://npm.pkg.github.com
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: Update npm version
         id: package-version
@@ -64,6 +65,8 @@ jobs:
 
       - name: NPM publish
         run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: Push version update
         run: |
