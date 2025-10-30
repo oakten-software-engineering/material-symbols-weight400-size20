@@ -50,18 +50,26 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+
+      - name: Verify npm authentication
+        run: npm whoami --registry=https://npm.pkg.github.com
 
       - name: Update npm version
         id: package-version
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
           npm version patch
-          git push --follow-tags
           echo "package_version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
       - name: NPM publish
         run: npm publish
+
+      - name: Push version update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git push --follow-tags
 
       - name: Create Release
         uses: ncipollo/release-action@v1
