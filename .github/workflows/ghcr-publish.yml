@@ -1,0 +1,74 @@
+name: GitHub Packages publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      force-push:
+        description: 'Force version update and publish'
+        required: true
+        type: boolean
+        default: false
+  workflow_run:
+    workflows: [ "Update Material Symbols" ]
+    branches: [ main ]
+    types:
+      - completed
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  check-for-update:
+    runs-on: ubuntu-latest
+    name: Check if symbols changed
+    if: github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch'
+    outputs:
+      all_changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v47
+
+      - name: List all changed files
+        run: echo "${{ toJSON(steps.changed-files.outputs) }}"
+
+  publish-ghcr:
+    name: Update version and publish to GitHub Packages
+    runs-on: ubuntu-latest
+    needs: check-for-update
+    if: contains(needs.check-for-update.outputs.all_changed_files, 'symbols') || inputs.force-push
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Setup node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Update npm version
+        id: package-version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          npm version patch
+          git push --follow-tags
+          echo "package_version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: NPM publish
+        run: npm publish
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          name: v${{ steps.package-version.outputs.package_version }}
+          tag: v${{ steps.package-version.outputs.package_version }}
+          commit: ${{ github.sha }}
+          prerelease: false
+          makeLatest: true
+          token: ${{ github.token }}
