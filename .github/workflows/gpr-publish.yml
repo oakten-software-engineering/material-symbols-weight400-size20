@@ -51,10 +51,9 @@ jobs:
         with:
           node-version: 24
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@oakten-software-engineering'
 
       - name: Verify npm authentication
-        run: npm whoami
+        run: npm whoami --registry=https://npm.pkg.github.com
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
 
@@ -75,8 +74,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: Push version update
-        run: |
-          git push --follow-tags
+        run: git push --follow-tags
 
       - name: Create Release
         uses: ncipollo/release-action@v1
