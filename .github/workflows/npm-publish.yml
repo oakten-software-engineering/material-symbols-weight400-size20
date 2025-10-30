@@ -5,11 +5,11 @@ name: NPM Publish
 
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Update Material Symbols"]
-    branches: [main]
-    types: 
-      - completed
+#  workflow_run:
+#    workflows: ["Update Material Symbols"]
+#    branches: [main]
+#    types:
+#      - completed
 
 permissions:
   id-token: write  # Required for OIDC
